@@ -1,0 +1,20 @@
+{
+  "private": true,
+  "scripts": {
+    "postinstall": "dotnet tool restore",
+    "publish": "node publish.js",
+    "publish:package": "fake build --target PublishPkg",
+    "tests": "mocha dist/tests -r esm",
+    "start": "dotnet fable watch src/App --run webpack serve",
+    "build": "dotnet fable       src/App --run webpack --mode production",
+    "gen": "cd gen; dotnet run"
+  },
+  "dependencies": {
+    "webpack": "^5.11.0",
+    "webpack-cli": "^4.2.0",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "devDependencies": {
+    "esm": "^3.2.25"
+  }
+}

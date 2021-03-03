@@ -1,0 +1,9 @@
+node_modules
+gen/junk
+**/bin
+**/obj
+gen/original
+*.fs.js
+bundle.js
+.ionide
+package-lock.json
