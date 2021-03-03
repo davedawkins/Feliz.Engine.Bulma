@@ -13,8 +13,10 @@ This means that given an implementation of Feliz.Engine for a particular framewo
 
 ## Bulma Framework Generation
 
-The Feliz.BulmaEngine repository includes a code generator for Bulma, which used to generate this library. It should make it
+The Feliz.BulmaEngine repository includes a code generator for Bulma, which was used to generate this library. It should make it
 easier to incorporate updates to Bulma and then regenerate the library. Of course, others may also find it useful for their own Bulma projects. The data files for the generator were converted from the source files of Roman's Feliz.Bulma project.
+
+See folder `./gen` in the repository for the code generator.
 
 ## Coverage
 
@@ -25,4 +27,45 @@ This is the status of Feliz.BulmaEngine with respect to Feliz.Bulma, which is a 
 - Modifiers (eg is-fullheight)         760 / 760
 - Extensions (eg DateTimePicker)         0 /  11
 
+## Example code
+
+This is part of a test app, targeting the Sutil framework.
+
+```fs
+module App
+
+open Sutil.DOM
+open Feliz
+
+let bulma = Feliz.BulmaEngine.BulmaEngine<NodeFactory>( Html, Attr )
+
+let b = bulma /// Can reduce "bulma" noise even further
+let m = bulma.m  /// Access helper to reduce noise
+
+/// ... or you can have it more verbose
+let hero = bulma.m.hero /// Allows you to do  hero.isFullheight if you want
+let color = bulma.m.color /// For example, color.isDanger
+
+let app() =
+    bulma.hero [
+        m.hero.isFullheight
+        m.color.isLight
+        bulma.section [
+            bulma.container [
+               text "Hello world"
+               bulma.button.button [
+                   m.color.isDanger
+                   text "Button"
+               ]
+               bulma.button.a [
+                   m.color.isInfo
+                   text "Link"
+               ]
+               bulma.button.span "Span"
+            ]
+        ]
+    ]
+
+app() |> mountElement "sutil-app"
+```
 
