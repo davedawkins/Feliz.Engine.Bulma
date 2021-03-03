@@ -3,7 +3,7 @@
   "scripts": {
     "postinstall": "dotnet tool restore",
     "publish": "node publish.js",
-    "publish:package": "fake build --target PublishPkg",
+    "publish:package": "dotnet fsi build.fsx publish",
     "tests": "mocha dist/tests -r esm",
     "start": "dotnet fable watch src/App --run webpack serve",
     "build": "dotnet fable       src/App --run webpack --mode production",
@@ -15,6 +15,7 @@
     "webpack-dev-server": "^3.11.0"
   },
   "devDependencies": {
-    "esm": "^3.2.25"
+    "esm": "^3.2.25",
+    "fable-publish-utils": "2.0.0"
   }
 }
