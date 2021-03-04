@@ -29,43 +29,42 @@ This is the status of Feliz.BulmaEngine with respect to Feliz.Bulma, which is a 
 
 ## Example code
 
-This is part of a test app, targeting the Sutil framework.
+This is part of a Sutil example:
 
 ```fs
-module App
-
-open Sutil.DOM
-open Feliz
-
-let bulma = Feliz.BulmaEngine.BulmaEngine<NodeFactory>( Html, Attr )
-
-let b = bulma /// Can reduce "bulma" noise even further
-let m = bulma.m  /// Access helper to reduce noise
-
-/// ... or you can have it more verbose
-let hero = bulma.m.hero /// Allows you to do  hero.isFullheight if you want
-let color = bulma.m.color /// For example, color.isDanger
-
-let app() =
-    bulma.hero [
-        m.hero.isFullheight
-        m.color.isLight
-        bulma.section [
+        bulma.heroBody [
             bulma.container [
-               text "Hello world"
-               bulma.button.button [
-                   m.color.isDanger
-                   text "Button"
-               ]
-               bulma.button.a [
-                   m.color.isInfo
-                   text "Link"
-               ]
-               bulma.button.span "Span"
-            ]
-        ]
-    ]
+                bulma.columns [
+                    columns.isCentered
+                    bulma.column [
+                        column.is10Tablet; column.is8Desktop; column.is6Widescreen
+                        bulma.box [
+                            on "submit" (fun _ -> AttemptLogin |> dispatch) [PreventDefault]
+                            Attr.action ""
 
-app() |> mountElement "sutil-app"
+                            bulma.field.div [
+                                class' "has-text-danger"
+                                Bind.fragment (model .> message) DOM.text
+                            ] |> Transition.showIf (model .> messageIsSet)
+
+                            bulma.field.div [
+                                bulma.label "Email"
+                                bulma.control.div [
+                                    control.hasIconsLeft
+                                    bulma.input.email [
+
+                                        bindEvent "input" (fun e -> EventHelpers.validity(e).valid |> not) (fun s -> bindClass s "is-danger")
+
+                                        Attr.placeholder "Hint: sutil@gmail.com"
+                                        Bind.attr ("value", model .> username , SetUsername >> dispatch)
+                                        Attr.required true
+                                    ]
+                                    bulma.icon [
+                                        icon.isSmall
+                                        icon.isLeft
+                                        fa "envelope"
+                                    ]
+                                ]
+                            ]
 ```
 
