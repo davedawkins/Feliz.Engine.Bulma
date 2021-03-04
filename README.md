@@ -2,11 +2,11 @@
 
 An F# implementation of Bulma layered on top of [Feliz.Engine](https://github.com/alfonsogarciacaro/Feliz.Engine), based on the work of Roman Provazník in [Feliz.Bulma](https://github.com/Dzoukr/Feliz.Bulma).
 
-## Differences with Feliz.Bulma
+## Comparison with Feliz.Bulma / I'm just looking for Bulma for Feliz
 
-Feliz.Bulma is implemented on top of Feliz, a DOM DSL for the React framework.
+Feliz.Bulma is implemented on top of Feliz, a DOM DSL for the React framework. **If your project uses Feliz, Feliz.Bulma is what you need.**
 
-Feliz.BulmaEngine is implemented on top of Feliz.Engine, an abstract DSL which can be implemented for any DOM-builder backend, client-side
+Feliz.BulmaEngine is implemented on top of Feliz.Engine, an abstract Feliz-like DSL which can be implemented for any DOM-builder backend, client-side
 or server-side.
 
 This means that given an implementation of Feliz.Engine for a particular framework, Feliz.BulmaEngine gives you a Bulma DSL for free.

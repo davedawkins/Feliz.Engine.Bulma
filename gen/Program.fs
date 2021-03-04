@@ -29,9 +29,17 @@ let bulmaModifierMembers (indent:int) : string[] =
 
     let fmtBlock (m:Modifier) =
         ([
-            $"{ws}member _.{m.Name} = {m.Name.KebabToPascalCase()}ModifiersEngine<'Element>(a)"
+            $"{ws}member _.{m.Name} = {m.Name.UpperFirst()}ModifiersEngine<'Element>(a)"
             ])
     Modifiers |> List.collect fmtBlock |> List.toArray
+
+let bulmaModifierLetBindings (indent:int) : string [] =
+    let ws = String(' ', indent)
+
+    let fmt (m:Modifier) =
+        $"let {m.Name} = bulma.m.{m.Name}"
+
+    Modifiers |> List.map fmt |> List.toArray
 
 let bulmaModifiers (indent:int) : string[] =
     let ws = String(' ', indent)
@@ -40,7 +48,7 @@ let bulmaModifiers (indent:int) : string[] =
         $"    member _.{c.KebabToCamelCase()} = a.className({classLiteral(c)})"
     let fmtBlock (m:Modifier) =
         ([
-            $"type {m.Name.KebabToPascalCase()}ModifiersEngine<'Element>(a : AttrEngine<'Element>) ="
+            $"type {m.Name.UpperFirst()}ModifiersEngine<'Element>(a : AttrEngine<'Element>) ="
             ])
         @ (m.Values |> List.map fmt)
         @ [ " " ]
@@ -125,6 +133,7 @@ let generateFromCommand (indent:int) (cmd:string) : string [] =
     | "bulmaElements"  -> bulmaElements  indent
     | "bulmaSubGroupTypes"  -> bulmaSubGroupTypes  indent
     | "bulmaSubGroupLetBindings"  -> bulmaSubGroupLetBindings  indent
+    | "bulmaModifierLetBindings" -> bulmaModifierLetBindings indent
     | "bulmaSubGroupMembers"  -> bulmaSubGroupMembers  indent
     | _ -> failwith ("Unknown generator command: " + cmd)
 

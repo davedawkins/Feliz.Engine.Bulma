@@ -2,6 +2,10 @@ module Identifier
 
 open System
 
+
+let upperFirst (str : string) =
+    str.[0..0].ToUpper() + str.[1..]
+
 let kebabToPascalCamelCase (str : string) (isPascalCase : bool)=
     if String.IsNullOrEmpty(str) then str
     else
@@ -24,4 +28,5 @@ let kebabToPascalCamelCase (str : string) (isPascalCase : bool)=
 type System.String with
     member x.KebabToCamelCase() = kebabToPascalCamelCase x false
     member x.KebabToPascalCase() = kebabToPascalCamelCase x true
+    member x.UpperFirst() = upperFirst x
 

@@ -7,3 +7,4 @@ gen/original
 bundle.js
 .ionide
 package-lock.json
+.fake

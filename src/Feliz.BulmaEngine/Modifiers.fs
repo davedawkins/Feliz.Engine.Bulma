@@ -1179,7 +1179,7 @@ type BreadcrumbModifiersEngine<'Element>(a : AttrEngine<'Element>) =
     member _.isMedium = a.className(ClassLiterals.``is-medium``)
     member _.isLarge = a.className(ClassLiterals.``is-large``)
  
-type CardheadertitleModifiersEngine<'Element>(a : AttrEngine<'Element>) =
+type CardHeaderTitleModifiersEngine<'Element>(a : AttrEngine<'Element>) =
     member _.isCentered = a.className(ClassLiterals.``is-centered``)
  
 type DropdownModifiersEngine<'Element>(a : AttrEngine<'Element>) =
@@ -1191,7 +1191,7 @@ type DropdownModifiersEngine<'Element>(a : AttrEngine<'Element>) =
 type ModalModifiersEngine<'Element>(a : AttrEngine<'Element>) =
     member _.isActive = a.className(ClassLiterals.``is-active``)
  
-type ModalcloseModifiersEngine<'Element>(a : AttrEngine<'Element>) =
+type ModalCloseModifiersEngine<'Element>(a : AttrEngine<'Element>) =
     member _.isSmall = a.className(ClassLiterals.``is-small``)
     member _.isNormal = a.className(ClassLiterals.``is-normal``)
     member _.isMedium = a.className(ClassLiterals.``is-medium``)
@@ -1203,22 +1203,22 @@ type NavbarModifiersEngine<'Element>(a : AttrEngine<'Element>) =
     member _.isFixedTop = a.className(ClassLiterals.``is-fixed-top``)
     member _.isFixedBottom = a.className(ClassLiterals.``is-fixed-bottom``)
  
-type NavbarmenuModifiersEngine<'Element>(a : AttrEngine<'Element>) =
+type NavbarMenuModifiersEngine<'Element>(a : AttrEngine<'Element>) =
     member _.isActive = a.className(ClassLiterals.``is-active``)
     member _.isFixedTop = a.className(ClassLiterals.``is-fixed-top``)
     member _.isFixedBottom = a.className(ClassLiterals.``is-fixed-bottom``)
  
-type NavbarburgerModifiersEngine<'Element>(a : AttrEngine<'Element>) =
+type NavbarBurgerModifiersEngine<'Element>(a : AttrEngine<'Element>) =
     member _.isActive = a.className(ClassLiterals.``is-active``)
  
-type NavbardropdownModifiersEngine<'Element>(a : AttrEngine<'Element>) =
+type NavbarDropdownModifiersEngine<'Element>(a : AttrEngine<'Element>) =
     member _.isRight = a.className(ClassLiterals.``is-right``)
     member _.isBoxed = a.className(ClassLiterals.``is-boxed``)
  
-type NavbarlinkModifiersEngine<'Element>(a : AttrEngine<'Element>) =
+type NavbarLinkModifiersEngine<'Element>(a : AttrEngine<'Element>) =
     member _.isArrowless = a.className(ClassLiterals.``is-arrowless``)
  
-type NavbaritemModifiersEngine<'Element>(a : AttrEngine<'Element>) =
+type NavbarItemModifiersEngine<'Element>(a : AttrEngine<'Element>) =
     member _.isExpanded = a.className(ClassLiterals.``is-expanded``)
     member _.isTab = a.className(ClassLiterals.``is-tab``)
     member _.hasDropdown = a.className(ClassLiterals.``has-dropdown``)
@@ -1226,7 +1226,7 @@ type NavbaritemModifiersEngine<'Element>(a : AttrEngine<'Element>) =
     member _.isHoverable = a.className(ClassLiterals.``is-hoverable``)
     member _.isActive = a.className(ClassLiterals.``is-active``)
  
-type PaginationlinkModifiersEngine<'Element>(a : AttrEngine<'Element>) =
+type PaginationLinkModifiersEngine<'Element>(a : AttrEngine<'Element>) =
     member _.isCurrent = a.className(ClassLiterals.``is-current``)
  
 type FileModifiersEngine<'Element>(a : AttrEngine<'Element>) =
@@ -1273,7 +1273,7 @@ type ButtonsModifiersEngine<'Element>(a : AttrEngine<'Element>) =
     member _.isCentered = a.className(ClassLiterals.``is-centered``)
     member _.isRight = a.className(ClassLiterals.``is-right``)
  
-type FieldlabelModifiersEngine<'Element>(a : AttrEngine<'Element>) =
+type FieldLabelModifiersEngine<'Element>(a : AttrEngine<'Element>) =
     member _.isSmall = a.className(ClassLiterals.``is-small``)
     member _.isNormal = a.className(ClassLiterals.``is-normal``)
     member _.isMedium = a.className(ClassLiterals.``is-medium``)
