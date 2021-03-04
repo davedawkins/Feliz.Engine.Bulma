@@ -32,6 +32,7 @@ This is the status of Feliz.BulmaEngine with respect to Feliz.Bulma, which is a 
 This is part of a Sutil example:
 
 ```fs
+    let view() = 
         bulma.heroBody [
             bulma.container [
                 bulma.columns [
@@ -66,5 +67,6 @@ This is part of a Sutil example:
                                     ]
                                 ]
                             ]
+                            ]]]]]
 ```
 
