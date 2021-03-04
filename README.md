@@ -1,4 +1,4 @@
-# Feliz.BulmaEngine [![Nuget](https://img.shields.io/nuget/v/Feliz.BulmaEngine.svg?maxAge=0&colorB=brightgreen)](https://www.nuget.org/packages/Feliz.BulmaEngine)
+# Feliz.Engine.Bulma [![Nuget](https://img.shields.io/nuget/v/Feliz.Engine.Bulma.svg?maxAge=0&colorB=brightgreen)](https://www.nuget.org/packages/Feliz.Engine.Bulma)
 
 An F# implementation of Bulma layered on top of [Feliz.Engine](https://github.com/alfonsogarciacaro/Feliz.Engine), based on the work of Roman Provazník in [Feliz.Bulma](https://github.com/Dzoukr/Feliz.Bulma).
 
@@ -6,21 +6,21 @@ An F# implementation of Bulma layered on top of [Feliz.Engine](https://github.co
 
 Feliz.Bulma is implemented on top of Feliz, a DOM DSL for the React framework. **If your project uses Feliz, Feliz.Bulma is what you need.**
 
-Feliz.BulmaEngine is implemented on top of Feliz.Engine, an abstract Feliz-like DSL which can be implemented for any DOM-builder backend, client-side
+Feliz.Engine.Bulma is implemented on top of Feliz.Engine, an abstract Feliz-like DSL which can be implemented for any DOM-builder backend, client-side
 or server-side.
 
-This means that given an implementation of Feliz.Engine for a particular framework, Feliz.BulmaEngine gives you a Bulma DSL for free.
+This means that given an implementation of Feliz.Engine for a particular framework, Feliz.Engine.Bulma gives you a Bulma DSL for free.
 
 ## Bulma Framework Generation
 
-The Feliz.BulmaEngine repository includes a code generator for Bulma, which was used to generate this library. It should make it
+The Feliz.Engine.Bulma repository includes a code generator for Bulma, which was used to generate this library. It should make it
 easier to incorporate updates to Bulma and then regenerate the library. Of course, others may also find it useful for their own Bulma projects. The data files for the generator were converted from the source files of Roman's Feliz.Bulma project.
 
 See folder `./gen` in the repository for the code generator.
 
 ## Coverage
 
-This is the status of Feliz.BulmaEngine with respect to Feliz.Bulma, which is a complete implementation of Bulma:
+This is the status of Feliz.Engine.Bulma with respect to Feliz.Bulma, which is a complete implementation of Bulma:
 
 - Top-level elements (eg, bulma.hero)   78 /  83
 - Sub-elements (eg, bulma.button.span)  23 /  24
