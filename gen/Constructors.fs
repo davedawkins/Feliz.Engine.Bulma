@@ -52,6 +52,9 @@ let makeSubMin nameIsTag = fun cls ->
 let makeSubCls nameIsTag secondClass = fun cls ->
     makeMember nameIsTag [] (el (Literal nameIsTag) [ class' (Literal cls); class' (Literal secondClass); value']), true
 
+let makeSubNameTagCls  tag secondClass = fun cls ->
+    makeMember (tag + "-" + secondClass) [] (el (Literal tag) [ class' (Literal cls); class' (Literal secondClass); value']), true
+
 // ----------------------------------------------------------------------------
 // tagOuter>tagInner.clsInner
 //

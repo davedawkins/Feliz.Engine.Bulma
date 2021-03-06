@@ -30,7 +30,6 @@ let Elements = [
     makeAll "column"          "div"
     makeAll "label"           "label"
     makeMin "textarea"        "textarea"
-
     makeDslMin "select"       (el (Literal "div") [ class' (Literal "select"); el (Literal "select") [ value' ]] )   //"div.select select" //TODO
     makeMin "icon"            "span"
     makeMin "file"        "div"
@@ -95,6 +94,7 @@ let Elements = [
     //makeAll "subtitle" "h2" // Clash with subgroup subtitle :-(
 ]
 
+
 let SubElements = [
     makeSubGroup "button" [
         makeSubAll "button"
@@ -104,21 +104,33 @@ let SubElements = [
         makeSubType "reset" "input"
     ]
     makeSubGroup "title" [
-        makeSubCls "h1" "is-1"
-        makeSubCls "h2" "is-2"
-        makeSubCls "h3" "is-3"
-        makeSubCls "h4" "is-4"
-        makeSubCls "h5" "is-5"
-        makeSubCls "h6" "is-6"
+        makeSubAll "h1"
+        makeSubAll "h2"
+        makeSubAll "h3"
+        makeSubAll "h4"
+        makeSubAll "h5"
+        makeSubAll "h6"
+        makeSubNameTagCls "h1" "is-1"
+        makeSubNameTagCls "h2" "is-2"
+        makeSubNameTagCls "h3" "is-3"
+        makeSubNameTagCls "h4" "is-4"
+        makeSubNameTagCls "h5" "is-5"
+        makeSubNameTagCls "h6" "is-6"
         makeSubAll "p"
     ]
     makeSubGroup "subtitle" [
-        makeSubCls "h1" "is-1"
-        makeSubCls "h2" "is-2"
-        makeSubCls "h3" "is-3"
-        makeSubCls "h4" "is-4"
-        makeSubCls "h5" "is-5"
-        makeSubCls "h6" "is-6"
+        makeSubAll "h1"
+        makeSubAll "h2"
+        makeSubAll "h3"
+        makeSubAll "h4"
+        makeSubAll "h5"
+        makeSubAll "h6"
+        makeSubNameTagCls "h1" "is-1"
+        makeSubNameTagCls "h2" "is-2"
+        makeSubNameTagCls "h3" "is-3"
+        makeSubNameTagCls "h4" "is-4"
+        makeSubNameTagCls "h5" "is-5"
+        makeSubNameTagCls "h6" "is-6"
         makeSubAll "p"
     ]
     makeSubGroup "control" [
@@ -221,8 +233,6 @@ let SubElements = [
                 (el (Literal "input") [ type' (Literal "checkbox"); value' ])
                 (text (ArgRef "label"))
             ])
-        //makeSubType "checkbox" "input"
-        //makeSubType "radio" "input"
     ]
 
     makeSubGroup "input-labels" [
@@ -230,9 +240,9 @@ let SubElements = [
         makeSubMemberMin "radio" [] (el (Literal "label") [ class' (Literal "radio"); value' ])
     ]
 
-    //makeSubGroup "text" [
-    //    makeSubMin "p"
-    //    makeSubMin "div"
-    //    makeSubMin "span"
-    //]
+    makeSubGroup "text" [
+        makeSubMin "p"
+        makeSubMin "div"
+        makeSubMin "span"
+    ]
 ]

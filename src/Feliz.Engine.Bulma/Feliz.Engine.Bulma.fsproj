@@ -6,7 +6,7 @@
         <Description>Bulma wrapper for Feliz.Engine</Description>
         <PackageTags>fsharp;fable;bulma;feliz;html</PackageTags>
         <Authors>David Dawkins</Authors>
-        <PackageVersion>1.0.0-beta-001</PackageVersion>
+        <PackageVersion>1.0.0-beta-002</PackageVersion>
         <Version>1.0.0</Version>
     </PropertyGroup>
     <ItemGroup>

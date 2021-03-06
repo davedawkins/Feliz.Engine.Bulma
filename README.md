@@ -22,51 +22,94 @@ See folder `./gen` in the repository for the code generator.
 
 This is the status of Feliz.Engine.Bulma with respect to Feliz.Bulma, which is a complete implementation of Bulma:
 
-- Top-level elements (eg, bulma.hero)   78 /  83
-- Sub-elements (eg, bulma.button.span)  23 /  24
+- Top-level elements (eg, bulma.hero)   83 /  83
+- Sub-elements (eg, bulma.button.span)  24 /  24
 - Modifiers (eg is-fullheight)         760 / 760
 - Extensions (eg DateTimePicker)         0 /  11
 
-## Example code
+## Usage
 
-This is part of a Sutil example:
+See example App in [src/App](https://github.com/davedawkins/Feliz.Engine.Bulma/blob/main/src/App) for full details.
+
+Given an implementation of `Feliz.Engine` for a particular DSL, then the simplest way to get started is:
 
 ```fs
-    let view() = 
-        bulma.heroBody [
-            bulma.container [
-                bulma.columns [
-                    columns.isCentered
-                    bulma.column [
-                        column.is10Tablet; column.is8Desktop; column.is6Widescreen
-                        bulma.box [
-                            on "submit" (fun _ -> AttemptLogin |> dispatch) [PreventDefault]
-                            Attr.action ""
+// Dsl is an example DOM building framework, and exports
+open Dsl
 
-                            bulma.field.div [
-                                class' "has-text-danger"
-                                Bind.fragment (model .> message) DOM.text
-                            ] |> Transition.showIf (model .> messageIsSet)
+// Html and Attr are instances of
+// - Feliz.Engine.HtmlEngine<DslNode> and
+// - Feliz.Engine.AttrEngine<DslNode> respectively
+//
 
-                            bulma.field.div [
-                                bulma.label "Email"
-                                bulma.control.div [
-                                    control.hasIconsLeft
-                                    bulma.input.email [
+let bulma = Feliz.Engine.Bulma.BulmaEngine<DslNode>( Html, Attr )
 
-                                        bindEvent "input" (fun e -> EventHelpers.validity(e).valid |> not) (fun s -> bindClass s "is-danger")
+```
 
-                                        Attr.placeholder "Hint: sutil@gmail.com"
-                                        Bind.attr ("value", model .> username , SetUsername >> dispatch)
-                                        Attr.required true
-                                    ]
-                                    bulma.icon [
-                                        icon.isSmall
-                                        icon.isLeft
-                                        fa "envelope"
-                                    ]
-                                ]
-                            ]
-                            ]]]]]
+However, you can copy & paste [src/Feliz.Engine.Bulma/Binding.fs](https://github.com/davedawkins/Feliz.Engine.Bulma/blob/main/src/Feliz.Engine.Bulma/Binding.fs) into your project (inserting the correct DSL types appropriately),
+and you'll have additional definitions such as `helpers`, `size`, `spacing` etc
+
+```fs
+// --------------------------------------------------------
+// !!! DO NOT EDIT !!!
+// Generated from templates/Binding.template.fs
+// --------------------------------------------------------
+
+// This isn't compiled into the Feliz.Engine.Bulma package. Copy it to your framework library
+// and replace Framework and FrameworkElement appropriately. It isn't necessary, but it may
+// help reduce some "bulma.m." boilerplate noise in your app
+
+namespace Framework.Bulma
+
+open Framework
+
+let bulma = Feliz.Engine.Bulma.BulmaEngine<FrameworkElement>( Html, Attr )
+
+let helpers = bulma.m.helpers
+let size = bulma.m.size
+let spacing = bulma.m.spacing
+let text = bulma.m.text
+// ... etc
+```
+
+## Example App
+
+The example app in `src/App` implements the Bulma [form sampler](https://bulma.io/documentation/form/general/)
+
+
+
+## Example code
+
+This is part of the example App code:
+
+```fs
+    bulma.field.div [
+        bulma.label [
+            text "Username"
+        ]
+        bulma.control.div [
+            control.hasIconsLeft
+            control.hasIconsRight
+            bulma.input.text [
+                color.isSuccess
+                Attr.placeholder "Text input"
+                Attr.value "bulma"
+            ]
+            bulma.icon [
+                icon.isSmall
+                icon.isLeft
+                Html.i [ class' "fa fa-user" ]
+            ]
+            bulma.icon [
+                icon.isSmall
+                icon.isRight
+                Html.i [ class' "fa fa-check" ]
+            ]
+        ]
+        bulma.help [
+            color.isSuccess
+            text "This username is available"
+        ]
+    ]
 ```
 

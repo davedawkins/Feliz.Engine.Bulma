@@ -1,3 +1,7 @@
+### 1.0.0-beta-003
+
+* Implement remaining members: title, subtitle, text
+
 ### 1.0.0-beta-002
 
 * Rename to Feliz.Engine.Bulma
