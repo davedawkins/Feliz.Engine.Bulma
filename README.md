@@ -11,6 +11,8 @@ or server-side.
 
 This means that given an implementation of Feliz.Engine for a particular framework, Feliz.Engine.Bulma gives you a Bulma DSL for free.
 
+[Sutil](https://github.com/DaveDawkins/Sutil) uses both `Feliz.Engine` and `Feliz.Engine.Bulma`
+
 ## Bulma Framework Generation
 
 The Feliz.Engine.Bulma repository includes a code generator for Bulma, which was used to generate this library. It should make it
