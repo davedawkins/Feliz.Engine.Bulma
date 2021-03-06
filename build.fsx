@@ -4,7 +4,7 @@ open PublishUtils
 
 // ATTENTION: Packages must appear in dependency order
 let packages =[
-    "Feliz.BulmaEngine"
+    "Feliz.Engine.Bulma"
 ]
 
 match argsLower with

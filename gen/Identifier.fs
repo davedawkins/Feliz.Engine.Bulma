@@ -2,7 +2,6 @@ module Identifier
 
 open System
 
-
 let upperFirst (str : string) =
     str.[0..0].ToUpper() + str.[1..]
 

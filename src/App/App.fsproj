@@ -3,10 +3,14 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Dsl.fs" />
+    <Compile Include="Dsl.Bulma.fs" />
     <Compile Include="App.fs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Sutil\src\Sutil\Sutil.fsproj" />
-    <ProjectReference Include="..\Feliz.BulmaEngine\Feliz.BulmaEngine.fsproj" />
+    <ProjectReference Include="..\Feliz.Engine.Bulma\Feliz.Engine.Bulma.fsproj" />
+    <PackageReference Include="Fable.Browser.Css" Version="2.*" />
+    <PackageReference Include="Fable.Browser.Dom" Version="2.*" />
+    <PackageReference Include="Fable.Core" Version="3.*" />
   </ItemGroup>
 </Project>

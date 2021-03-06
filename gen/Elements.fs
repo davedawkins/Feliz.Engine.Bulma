@@ -1,6 +1,7 @@
 module Elements
 
 open Types
+open Constructors
 
 let Elements = [
     makeAll "container"       "div"
@@ -18,7 +19,7 @@ let Elements = [
     makeAll "hero-foot"       "div"
     makeAll "field-label"      "div"
     makeAll "field-body"       "div"
-    //makeAll "file-input"       "input:type=file" //TODO
+    makeDslAll "file-input"    (el (Literal "input") [ type' (Literal "file"); value' ]) // input:type=file"
     makeMin "file-cta"         "span"
     makeAll "file-name"        "span"
     makeMin "file-icon"        "span"
@@ -29,7 +30,8 @@ let Elements = [
     makeAll "column"          "div"
     makeAll "label"           "label"
     makeMin "textarea"        "textarea"
-    //makeMin "select"          "div.select select" //TODO
+
+    makeDslMin "select"       (el (Literal "div") [ class' (Literal "select"); el (Literal "select") [ value' ]] )   //"div.select select" //TODO
     makeMin "icon"            "span"
     makeMin "file"        "div"
     makeAll "block"       "div"
@@ -74,9 +76,14 @@ let Elements = [
     makeMin "navbar-divider"         "hr"
     makeMin "navbar-menu"         "div"
     makeMin "navbar-burger"         "a"
-    makeMin "pagination"         "nav"
-    makeMin "pagination-list"         "ul"
-    //makeMin "pagination-ellipsis" "li span =&hellip;" //TODO
+    makeMin "pagination"    "nav"
+    makeMin "pagination-list"   "ul"
+    makeDslMin "pagination-ellipsis"
+        (el (Literal "li")
+            [ el (Literal "span") [
+                    class' (Literal "pagination-ellipsis")
+                    text (Literal "…") // "&hellip;"
+                    value' ]])
     makeMin "panel" "nav"
     makeMin "panel-heading" "p"
     makeMin "panel-tabs" "p"
@@ -146,7 +153,7 @@ let SubElements = [
         makeSubAll "button"
     ]
     makeSubGroup "menu-item" [
-        makeSubFmt "a" "li>a"
+        makeSubNested "a" "li" "" // li.a
     ]
     makeSubGroup "navbar-brand" [
         makeSubMin "div"
@@ -181,8 +188,8 @@ let SubElements = [
         makeSubAll "button"
     ]
     makeSubGroup "pagination-link" [
-        makeSubFmt "a" "li>a.pagination-link" //TODO
-        makeSubFmt "button" "li>a.pagination-link"//TODO
+        makeSubMember "a"      [] (el (Literal "li") [ (el (Literal "a"     ) [ class' (Literal "pagination-link") ]) ])
+        makeSubMember "button" [] (el (Literal "li") [ (el (Literal "button") [ class' (Literal "pagination-link") ]) ])
     ]
     makeSubGroup "panel-block" [
         makeSubAll "div"
@@ -204,12 +211,23 @@ let SubElements = [
         makeSubType "email" "input"
         makeSubType "tel" "input"
         makeSubType "number" "input"
-        makeSubType "checkbox" "input"
-        makeSubType "radio" "input"
+        makeSubMember "checkbox" [ ] (el (Literal "input") [ type' (Literal "checkbox"); value' ] )
+        makeSubMember "radio" [ ] (el (Literal "input") [ type' (Literal "radio"); value' ] )
+        makeSubMember
+            "label-checkbox"
+            [ "label", "string" ]
+            (el (Literal "label") [
+                class' (Literal "checkbox")
+                (el (Literal "input") [ type' (Literal "checkbox"); value' ])
+                (text (ArgRef "label"))
+            ])
+        //makeSubType "checkbox" "input"
+        //makeSubType "radio" "input"
     ]
+
     makeSubGroup "input-labels" [
-        makeSubFmt "checkbox" "label.checkbox" // TODO: No text overloads
-        makeSubFmt "radio" "label.radio" // TODO: No text overloads
+        makeSubMemberMin "checkbox" [] (el (Literal "label") [ class' (Literal "checkbox"); value' ])
+        makeSubMemberMin "radio" [] (el (Literal "label") [ class' (Literal "radio"); value' ])
     ]
 
     //makeSubGroup "text" [

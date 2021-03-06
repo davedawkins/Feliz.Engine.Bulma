@@ -3,7 +3,7 @@
 // Generated from templates/Modifiers.template.fs
 // --------------------------------------------------------
 
-namespace Feliz.BulmaEngine
+namespace Feliz.Engine.Bulma
 
 open System
 open Feliz

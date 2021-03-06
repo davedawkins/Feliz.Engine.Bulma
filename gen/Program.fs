@@ -55,53 +55,104 @@ let bulmaModifiers (indent:int) : string[] =
 
     Modifiers |> List.collect fmtBlock |> List.toArray
 
+let subGroupTypeTemplate (name:string)=
+    $"type {name.KebabToPascalCase()}Engine<'Element>( h : Feliz.HtmlEngine<'Element>, a : Feliz.AttrEngine<'Element> ) ="
+
+let rec genSval (sval:StrVal) =
+    match sval with
+    |Literal s -> "\"" + s + "\""
+    |ArgRef id -> id
+
+let nodeIsValueParam node = match node with |ValueParamNodes -> true|_->false
+
+let rec genNode vname node =
+    match node with
+    | ValueParamNodes ->
+        $"h.fragment Helpers.ToElems(h,{vname})"
+    | TextNode sval ->
+        $"h.text {genSval sval}"
+    | ElementNode ev ->
+        let insertValue = ev.Children |> List.exists nodeIsValueParam
+        let childItems = ev.Children |> List.filter (not << nodeIsValueParam) |> List.map (genNode vname)
+        let cls = ev.Class |> Option.map genSval |> Option.defaultValue "\"\""
+        let typ = ev.Type |> Option.map (fun t ->  [ $"a.type' {genSval t}" ]) |> Option.defaultValue []
+
+        let typeWithChildItems = typ @ childItems
+        let iv = if insertValue then $"Helpers.ToElems(h,{vname})" else ""
+        let tci = "[" + String.Join(";",typeWithChildItems) + "]"
+
+        let finalChildItems =
+            match (insertValue, typeWithChildItems.IsEmpty) with
+            | true, false -> $"{tci} @ {iv}" // Join them
+            | true, true -> $"{iv}" // Just the "Helpers.ToElems" call
+            | _,_ -> tci // No "Helpers.ToElems", just use typeWithChildItems
+
+        $"Helpers.MakeNode(h,a, {genSval ev.Tag}, {cls}, {finalChildItems})"
+
+let genBody vname elchild =
+    match elchild with
+    | Node node -> genNode vname node
+    | _ -> failwith "Must be a node"
+
+let wrfn (name:string) (tag:string) (cls:string) (vname:string) (vtype:string) =
+    sprintf "    member _.%s (%s: %s) = Helpers.MakeNode(h, a, \"%s\", \"%s\", %s)"
+                name vname vtype tag cls vname
+
+let genMember (m:Member) (vname:string) (vtype:string) =
+    let args = m.Params |> List.fold (fun s (n,v) -> $"{s}{n}: {v}, ") ""
+    let body = genBody vname m.Body
+    $"    member _.{m.Name.KebabToCamelCase()} ({args}{vname}: {vtype}) = {body}"
+
+//let genMemberCompat (groupName: string) (item:MemberCompat) (vname:string) (vtype:string) =
+//    match item with
+//    | MemberCompat.Tag tag -> wrfn tag tag groupName vname vtype
+//    | MemberCompat.ExtraClass (tag,cls) -> wrfn tag tag $"{groupName} {cls}" vname vtype
+//    | MemberCompat.Type (tag,typ) ->
+//        $"    member _.{typ.KebabToCamelCase()} ({vname}: {vtype}) = Helpers.MakeNode(h,a,\"{tag}\", \"{groupName}\", [ a.type' \"{typ}\" ] @ (Helpers.ToElems(h,{vname})))"
+//    | MemberCompat.Nested (tag, outerTag, cls) ->
+//        $"    member _.{tag.KebabToCamelCase()} ({vname}: {vtype}) = Helpers.MakeNode(h,a,\"{outerTag}\", \"\", Helpers.MakeNode(h,a,\"{tag}\",\"{cls}\",{vname}) )"
+//    | MemberCompat.Member m -> genMember m vname vtype
+
+
 let bulmaElements (indent:int) : string[] =
     let ws = String(' ', indent)
-    let wrfn (e:Element) (vname:string) (vtype:string) =
-        sprintf "%smember _.%s (%s: %s) = Helpers.MakeNode(h, a, \"%s\", \"%s\", %s)"
-                    ws e.Name vname vtype e.Tag e.Cls vname
-    let gen e =
+    //let wrfn (e:Element) (vname:string) (vtype:string) =
+    //    sprintf "%smember _.%s (%s: %s) = Helpers.MakeNode(h, a, \"%s\", \"%s\", %s)"
+    //                ws e.Name vname vtype e.Tag e.Cls vname
+
+    let gen (m : Member, hasTextOverloads : bool) =
         seq {
-            if (e.Text) then
-                wrfn e "value" "string"
-                wrfn e "value" "int"
-                wrfn e "value" "float"
-            wrfn e "value" "'Element"
-            wrfn e "children" "seq<'Element>"
+            if (hasTextOverloads) then
+                genMember m "value" "string"
+                genMember m "value" "int"
+                genMember m "value" "float"
+            genMember m "value" "'Element"
+            genMember m "children" "seq<'Element>"
+
+//                wrfn e "value" "string"
+//                wrfn e "value" "int"
+//                wrfn e "value" "float"
+//            wrfn e "value" "'Element"
+//            wrfn e "children" "seq<'Element>"
             ""
         } |> List.ofSeq
 
     Elements |> List.fold (fun lines el -> lines @ gen el) [ ] |> Array.ofList
 
-let subGroupTypeTemplate (name:string)=
-    $"type {name.KebabToPascalCase()}Engine<'Element>( h : Feliz.HtmlEngine<'Element>, a : Feliz.AttrEngine<'Element> ) =
-    do()"
 
 let bulmaSubGroupTypes (indent:int) : string[] =
     let ws = String(' ', indent)
-    let wrfn (name:string) (tag:string) (cls:string) (vname:string) (vtype:string) =
-        sprintf "    member _.%s (%s: %s) = Helpers.MakeNode(h, a, \"%s\", \"%s\", %s)"
-                    name vname vtype tag cls vname
-
-    let genMember (groupName: string) (item:SubItem) (vname:string) (vtype:string) =
-        match item with
-        | SubItem.Tag tag -> wrfn tag tag groupName vname vtype
-        | SubItem.ExtraClass (tag,cls) -> wrfn tag tag $"{groupName} {cls}" vname vtype
-        | SubItem.Type (tag,typ) ->
-            $"    member _.{typ.KebabToCamelCase()} ({vname}: {vtype}) = Helpers.MakeNode(h,a,\"{tag}\", \"{groupName}\", [ a.type' \"{typ}\" ] @ (Helpers.ToElems(h,{vname})))"
-        | _ -> ""
-
     let gen (g:SubGroup) =
         seq {
             ""
             subGroupTypeTemplate g.Name
-            for (item,hasTextOverloads) in g.Items do
+            for (item,hasTextOverloads) in g.Members do
                 if (hasTextOverloads) then
-                    genMember g.Name item "value" "string"
-                    genMember g.Name item "value" "int"
-                    genMember g.Name item "value" "float"
-                genMember g.Name item "value" "'Element"
-                genMember g.Name item "children" "seq<'Element>"
+                    genMember item "value" "string"
+                    genMember item "value" "int"
+                    genMember item "value" "float"
+                genMember item "value" "'Element"
+                genMember item "children" "seq<'Element>"
             ""
         } |> List.ofSeq
 
@@ -155,7 +206,7 @@ let generateFrom (source:string) (targetDir:string) =
 let main argv =
 
     let templates = System.IO.Directory.EnumerateFiles("templates", "*.template.fs") |> List.ofSeq
-    let target  = "../src/Feliz.BulmaEngine"
+    let target  = "../src/Feliz.Engine.Bulma"
 
     for template in templates do
         generateFrom template target

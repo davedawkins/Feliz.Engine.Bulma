@@ -6,6 +6,7 @@
   <ItemGroup>
     <Compile Include="Identifier.fs" />
     <Compile Include="Types.fs" />
+    <Compile Include="Constructors.fs" />
     <Compile Include="Elements.fs" />
     <Compile Include="Modifiers.fs" />
     <Compile Include="Program.fs" />
