@@ -49,7 +49,7 @@ let bulma = Feliz.Engine.Bulma.BulmaEngine<DslNode>( Html, Attr )
 ```
 
 However, you can copy & paste [src/Feliz.Engine.Bulma/Binding.fs](https://github.com/davedawkins/Feliz.Engine.Bulma/blob/main/src/Feliz.Engine.Bulma/Binding.fs) into your project (inserting the correct DSL types appropriately),
-and you'll have additional definitions such as `helpers`, `size`, `spacing` etc
+and you'll have additional shortcuts to the modifiers such as `size.is6`, `color.isDanger` instead of `bulma.m.color.isDanger` etc.
 
 ```fs
 // --------------------------------------------------------
