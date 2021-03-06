@@ -76,7 +76,7 @@ let text = bulma.m.text
 
 The example app in `src/App` implements the Bulma [form sampler](https://bulma.io/documentation/form/general/)
 
-
+<img width="829" alt="Example App" src="https://user-images.githubusercontent.com/285421/110218799-87f29580-7eb3-11eb-8110-9f56f72104b1.png">
 
 ## Example code
 
