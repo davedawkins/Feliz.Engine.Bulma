@@ -1,3 +1,7 @@
+### 1.0.0-beta-004
+
+* Support for Feliz.Engine 1.0.0-beta-003 (new HtmlEngine, AttrEngine constructors)
+
 ### 1.0.0-beta-003
 
 * Implement remaining members: title, subtitle, text

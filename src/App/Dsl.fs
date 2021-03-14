@@ -1,5 +1,6 @@
 module Dsl
 
+open System
 open Feliz
 open Browser.Types
 open Browser.Dom
@@ -8,12 +9,18 @@ open Browser.Dom
 // Very simple DOM DSL
 type NodeFactory = Node -> Node
 
+let empty : NodeFactory = id
+
 let el (tag : string) (children : NodeFactory seq) : NodeFactory = fun (parent:Node) ->
     let e = document.createElement(tag)
     for child in children do
         child e |> ignore
     parent.appendChild(e) |> ignore
     upcast e
+
+let fragment (nodes : NodeFactory seq) : NodeFactory = fun (parent:Node) ->
+    nodes |> Seq.iter (fun n -> parent |> n |> ignore)
+    parent
 
 let text v : NodeFactory = fun parent ->
     let n = document.createTextNode(v)
@@ -39,14 +46,11 @@ let mountElement (id:string) (app:NodeFactory) =
 // ----------------------------------------------------------------------------
 // Feliz.Engine for our simple DSL
 
-let Html = HtmlEngine( {new HtmlHelper<NodeFactory> with
-            member _.MakeNode(tag, nodes) = el tag nodes
-            member _.StringToNode(v) = text v
-            member _.EmptyNode = Unchecked.defaultof<_>
-            })
+let Html = HtmlEngine<NodeFactory>(
+                makeNode     = Func<string,NodeFactory seq,NodeFactory>( el ),
+                stringToNode = Func<string,NodeFactory>( text ),
+                emptyNode    = Func<NodeFactory>(fun () -> empty))
 
-let Attr =
-    AttrEngine
-        { new AttrHelper<NodeFactory> with
-            member _.MakeAttr(key, value) = attr(key, value)
-            member _.MakeBooleanAttr(key, value) = attr(key, value) }
+let Attr = AttrEngine<NodeFactory>(
+                makeAttr = Func<string,string,NodeFactory>(fun key value -> attr(key, value)),
+                makeBooleanAttr = Func<string,bool,NodeFactory>(fun key value -> attr(key, value)) )
