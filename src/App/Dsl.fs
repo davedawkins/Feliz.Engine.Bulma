@@ -46,11 +46,6 @@ let mountElement (id:string) (app:NodeFactory) =
 // ----------------------------------------------------------------------------
 // Feliz.Engine for our simple DSL
 
-let Html = HtmlEngine<NodeFactory>(
-                makeNode     = Func<string,NodeFactory seq,NodeFactory>( el ),
-                stringToNode = Func<string,NodeFactory>( text ),
-                emptyNode    = Func<NodeFactory>(fun () -> empty))
+let Html = HtmlEngine<NodeFactory>( el, text, fun () -> empty );
 
-let Attr = AttrEngine<NodeFactory>(
-                makeAttr = Func<string,string,NodeFactory>(fun key value -> attr(key, value)),
-                makeBooleanAttr = Func<string,bool,NodeFactory>(fun key value -> attr(key, value)) )
+let Attr = AttrEngine<NodeFactory>( (fun k v -> attr(k,v)), (fun k v -> attr(k,v)) )

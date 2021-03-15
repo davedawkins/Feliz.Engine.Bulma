@@ -1,6 +1,11 @@
+### 1.0.0-beta-005
+
+* Support for Feliz.Engine 1.0.0-beta-004 (new HtmlEngine, AttrEngine constructors - no arity checks)
+* Add RepositoryUrl to package
+
 ### 1.0.0-beta-004
 
-* Support for Feliz.Engine 1.0.0-beta-003 (new HtmlEngine, AttrEngine constructors)
+* Support for Feliz.Engine 1.0.0-beta-003 (new HtmlEngine, AttrEngine constructors - delegates)
 
 ### 1.0.0-beta-003
 

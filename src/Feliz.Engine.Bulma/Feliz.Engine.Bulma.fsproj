@@ -4,6 +4,7 @@
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <PackageId>Feliz.Engine.Bulma</PackageId>
         <Description>Bulma wrapper for Feliz.Engine</Description>
+        <RepositoryUrl>https://github.com/davedawkins/Feliz.Engine.Bulma</RepositoryUrl>
         <PackageTags>fsharp;fable;bulma;feliz;html</PackageTags>
         <Authors>David Dawkins</Authors>
         <PackageVersion>1.0.0-beta-004</PackageVersion>
