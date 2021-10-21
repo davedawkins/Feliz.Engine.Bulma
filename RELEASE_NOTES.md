@@ -1,3 +1,6 @@
+### 1.0.0-beta-006
+
+- Fix for title.h4is4 (issue #2)
 ### 1.0.0-beta-005
 
 * Support for Feliz.Engine 1.0.0-beta-004 (new HtmlEngine, AttrEngine constructors - no arity checks)

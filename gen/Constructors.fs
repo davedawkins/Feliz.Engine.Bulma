@@ -23,12 +23,18 @@ let class' (cls:StrVal) = ElChild.Class cls
 let type' (typ:StrVal) = ElChild.Type typ
 let value' = ElChild.ValueParam // Placeholder for overloaded value: int, float, text, Node, Node list
 let el (tag:StrVal) (children : ElChild list) =
+    let appendCls (optCls : StrVal option) cls =
+        match optCls, cls with
+        | None, _ -> Some cls
+        | Some (Literal cls0), (Literal cls1) -> Literal (cls0 + " " + cls1) |> Some
+        | _, _-> failwith "Unexpected class expression"
+
     let rec build mn (args : ElChild list) =
         match args with
         | [] -> mn
         | x :: xs ->
             match x with
-            | Class c -> build { mn with Class = Some c } xs
+            | Class c -> build { mn with Class = appendCls mn.Class c } xs
             | ElChild.Type t -> build { mn with Type = Some t } xs
             | ValueParam -> build { mn with Children = mn.Children @ [ ValueParamNodes ] } xs
             | Node n -> build { mn with Children = mn.Children @ [n] } xs
