@@ -1,3 +1,7 @@
+### 1.0.0-beta-007
+
+- Fix for fileInput (issue #3)
+
 ### 1.0.0-beta-006
 
 - Fix for title.h4is4 (issue #2)

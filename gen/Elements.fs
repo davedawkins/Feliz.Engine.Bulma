@@ -19,7 +19,7 @@ let Elements = [
     makeAll "hero-foot"       "div"
     makeAll "field-label"      "div"
     makeAll "field-body"       "div"
-    makeDslAll "file-input"    (el (Literal "input") [ type' (Literal "file"); value' ]) // input:type=file"
+    makeDslAll "file-input"    (el (Literal "input") [ class' (Literal "file-input"); type' (Literal "file"); value' ]) // input:type=file"
     makeMin "file-cta"         "span"
     makeAll "file-name"        "span"
     makeMin "file-icon"        "span"
